@@ -1,0 +1,17 @@
+{% extends 'instant/_base.html' %}
+
+{% block content %}
+<form action="{% url 'instant:log_in' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div>
+        {{ field.label_tag }}
+        {{ field }}
+    </div>
+    {% endfor %}
+    <button type="submit">
+        Log In
+    </button>
+</form>
+<p>Don't Have an account? <a href="{% url 'instant:sign_up' %}">Sign Up!</a></p>
+{% endblock content %}

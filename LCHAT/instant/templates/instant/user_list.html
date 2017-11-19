@@ -1,4 +1,4 @@
-{% extends instant/_base.html %}
+{% extends 'instant/_base.html' %}
 
 {% block content %}
 {% endblock content %}
@@ -11,7 +11,7 @@
         };
 
         if (socket.readyState == WebSocket.OPEN) {
-            socket.onopen()
+            socket.onopen();
         }
     </script>
 {% endblock script %}
