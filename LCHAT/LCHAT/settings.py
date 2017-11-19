@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
+    'instant',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +68,16 @@ TEMPLATES = [
         },
     },
 ]
+
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'LCHAT.routing.channel_routing',
+    }
+}
 
 WSGI_APPLICATION = 'LCHAT.wsgi.application'
 
