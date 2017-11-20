@@ -1,11 +1,20 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.urlresolvers import reverse
 
 
+User = get_user_model()
+
+
+@login_required(login_url='/log_in/')
 def user_list(request):
-    return render(request, 'instant/user_list.html')
+    # TODO Never to be done in production
+    users = User.objects.select_related('logged_in_user')
+    for user in users:
+        user.status = 'Online' if hasattr(user, 'logged_in_user') else 'Offline'
+    return render(request, 'instant/user_list.html', {'users': users})
 
 
 def log_in(request):
@@ -25,6 +34,7 @@ def log_in(request):
     return render(request, 'instant/log_in.html', {'form': form})
 
 
+@login_required(login_url='/log_in/')
 def log_out(request):
     logout(request)
     return redirect('instant:log_in')
