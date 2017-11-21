@@ -30,3 +30,7 @@ def ws_disconnect(message):
             })
         })
     Group('users').discard(message.reply_channel)
+
+
+def message_handler(message):
+    print(message['text'])
